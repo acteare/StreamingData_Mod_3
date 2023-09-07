@@ -1,4 +1,5 @@
 """
+Amelia Teare 9/7/2023
 
 Message listener 
 
@@ -51,7 +52,7 @@ def process_message(ch, method, properties, body):
 # define a main function to run the program
 # pass in the hostname as a string parameter if you like
 # if no argument is provided, set a default value to localhost
-def main(hn: str = "localhosttt"):
+def main(hn: str = "localhost"):
     """Main program entry point."""
 
     # when a statement can go wrong, use a try-except block
@@ -107,4 +108,4 @@ def main(hn: str = "localhosttt"):
 # If this is the script we are running, then call some functions and execute code!
 # ---------------------------------------------------------------------------
 if __name__ == "__main__":
-    main()
+    main("localhost")

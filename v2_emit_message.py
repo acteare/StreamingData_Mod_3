@@ -1,4 +1,5 @@
 """
+Amelia Teare 9/7/2023
 
 Message sender / emitter 
 
@@ -11,13 +12,9 @@ Remember:
 - Use the up arrow to recall the last command executed in the terminal.
 """
 
-# Import from Standard Library
+# Imports. Keep to one line per for readability.
 import sys
-
-# Import External packages used
 import pika
-
-# Configure logging
 from util_logger import setup_logger
 
 logger, logname = setup_logger(__file__)
@@ -66,4 +63,4 @@ def send_message(host: str, queue_name: str, message: str):
 # If this is the script we are running, then call some functions and execute code!
 # ---------------------------------------------------------------------------
 if __name__ == "__main__":
-    send_message("llllocalhost", "hello", "Hello World!")
+    send_message("localhost", "hello", "How are you?!")

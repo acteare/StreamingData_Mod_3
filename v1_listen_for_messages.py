@@ -31,12 +31,12 @@ import pika, sys, os
 def main():
     # create a blocking connection to the RabbitMQ server
     connection = pika.BlockingConnection(
-        pika.ConnectionParameters(host="looooocalhost")
+        pika.ConnectionParameters(host='localhost')
     )
     # use the connection to create a communication channel
     channel = connection.channel()
     # use the channel to declare a queue
-    channel.queue_declare(queue="hello")
+    channel.queue_declare(queue='hello')
 
     # define a callback function to be called when a message is received
     def callback(ch, method, properties, body):

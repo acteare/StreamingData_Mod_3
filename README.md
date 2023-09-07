@@ -1,73 +1,25 @@
 # streaming-03-rabbitmq
 
-> Get started with RabbitMQ, a message broker, that enables multiple processes to communicate reliably through an intermediary.
-
-This project requires some free code - beyond that available in the Python Standard Library. To avoid messing up our local default Python installation, and any other Python projects we may have, we  create a local virtual environment to install and use these libraries.
-
-Think of a virtual environment as a safe sandbox. 
-We can install whatever we want in our sandbox, and it won't break other Python projects that may require different versions, etc. 
-
-We use the built-in Python utility `venv` to create our virtual environment. 
-There are other options, but this is simplest and most common. 
-We create the environment as a subfolder of this repo named .venv to keep it away from our project code. 
-
-
-## Prerequisites
-
-1. Git
-1. Python 3.7+ (3.11+ preferred)
-1. VS Code Editor
-1. VS Code Extension: Python (by Microsoft)
-1. RabbitMQ Server installed and running locally
-
 ## Before You Begin
 
 1. Fork this starter repo into your GitHub account.
 1. Clone your repo down to your machine.
 1. Explore your new project repo in VS Code on your local machine.
 
-## Task 1. Create a Python Virtual Environment
+## Initial Tasks
 
-We will create a local Python virtual environment to isolate our project's third-party dependencies from other projects.
-
-1. Open a terminal window in VS Code.
-1. Use the built-in Python utility venv to create a new virtual environment named `.venv` in the current directory.
-
-```shell
+1. Create a new virtual environment:
+```
 python -m venv .venv
 ```
 
-Verify you get a new .venv directory in your project. 
-We use .venv as the name to keep it away from our project files. 
+1. Activate that virtual environment:
+`.venv\Scripts\activate`
 
-## Task 2. Activate the Virtual Environment
-
-In the same VS Code terminal window, activate the virtual environment.
-
-- On Windows, run: `.venv\Scripts\activate`
-- On Linux/MacOS, run: `source .venv/bin/activate`
-
-Verify you see the virtual environment name (.venv) in your terminal prompt.
-
-## Task 3. Install Dependencies into the Virtual Environment
-
-To work with RabbitMQ, we need to install the pika library.
-A library is a collection of code that we can use in our own code.
-Learning to use free libraries that others have written to make our projects easier, faster, more reliable is a key skill for a developer.
-
-We keep the list of third-party libraries needed in a file named requirements.txt.
-Use the pip utility to install the libraries listed in requirements.txt into our active virtual environment. 
-
-Make sure you can see the .venv name in your terminal prompt before running this command.
-
+1. Make sure you have all pip requirements:
 `python -m pip install -r requirements.txt`
 
-## Task 4. Verify Setup
-
-In your VS Code terminal window, run the following commands to help verify your setup.
-These util files MAY be helpful to ensure you're setup correctly. 
-You may have a different configuration and RabbitMQ may still work; the check looks in common places, but may not work for all installations. 
-They are meant to be helpful, but are not required.
+1. Verify your set up with the fllowing commands. (This is just meant to be helpful. My aboutrabbit didn't work, but all the coding did. That was because my RabbitMQ was configured in a different location)
 
 ```shell
 python util_about.py
@@ -78,49 +30,32 @@ pip list
 
 ![verifying setup](./images/verify-setup.png)
 
-
-## Task 5. Read
-
 1. Read the [RabbitMQ Hello World! tutorial](https://www.rabbitmq.com/tutorials/tutorial-one-python.html)
 1. Read the code and comments in our 2 project files: emit_message.py and listen_for_messages.py
 
-Don't worry if it doesn't all make sense the first time. 
-Approach it like a puzzle and see what you can figure out. 
-
-## Task 6. Execute the Producer/Sender
+## Version 1
 
 1. Read v1_emit_message.py (and the tutorial)
 1. Run the file. 
-
-It will run, emit a message to the named RabbitMQ queue, and finish.
-We can execute additional commands in the terminal as soon as it finishes. 
-
-## Task 7. Execute the Consumer/Listener
-
 1. Read v1_listen_for_messages.py (and the tutorial)
 1. Run the file.
+    You'll need to fix an error in the program to get it to run.
+    Once it runs successfully, will it terminate on its own? How do you know? 
+        A: It does not appear to terminate on its own. I know this to be true because the code requires the use of pressing CTRL+C to stop the program.
+    As long as the process is running, we cannot use this terminal for other commands. 
+1. Open a new terminal window and run emit_message.py again.
+        Q: Watch the listing terminal - what do you see?  A second message?
+            A: Every time I run emit_message.py, I see a new message emerge on the other powershell. 
 
-You'll need to fix an error in the program to get it to run.
-Once it runs successfully, will it terminate on its own? How do you know? 
-As long as the process is running, we cannot use this terminal for other commands. 
-
-## Task 8. Open a New Terminal / Emit More Messages
-
-1. Open a new terminal window.
-1. Use this new window to run emit_message.py again.
-1. Watch the listing terminal - what do you see?  A second message?
-
-Sending the same message each time is kind of boring. This time:
-
-1. Where is the message defined? How can you change it?
-1. Modify emit_message.py to emit a different message. 
-1. Execute the updated emit_message.py. 
+1. Change the message and re-run the program. Do this at least 4 different times.
+    Q: Where is the message defined? How can you change it?
+        A:The message is defined in line 19 of the program. It is in the "body" of the channel. You also had to change the message that was printed at the end.
 1. Watch what happens in the listening terminal.
 
-Repeat this process several times - emit at least 4 different messages.
-Don't worry - it's just code. We can always revert back (try the 'undo' command in VS Code) to a version that works. You can't hurt anything.
+![Two Terminals Sending and Receiving Message Simultaneously](./version_1_screenshot.jpg)
 
-## Task 9. Save Time & Effort: Don't Repeat Yourself
+
+## Version 1 DRY
 
 Did you notice you had to change the message in TWO places?
 
@@ -143,7 +78,10 @@ and a consistent, reusable approach to building code.
 Each of the version 2 programs include an error as well. 
 
 1. Find the error and fix it. 
+    In the emit message file, I had to make sure the blocking connection pulled in the value for host. I also had to adjust the spelling errors in local host.
+    In the listen for messages file, I again had to make sure the blocking connection pulled in the correct value. I also had to add the actual name "local host" in the final function.
 1. Compare the structure of the version 2 files. 
+    The version 2 files are a bit more complex and provide more insight into what system and python version are being used to send and receive the messages. 
 1. Modify the docstrings on all your files.
 1. Include your name and the date.
 1. Imports always go at the top, just after the file docstring.
@@ -154,9 +92,14 @@ Each of the version 2 programs include an error as well.
 1. A function may - or may not - return a value. 
 1. When we open a connection, we should close the connection. 
 1. Which of the 4 files will always close() the connection?
+    The emit messages file with always close the connection. The listen for messages file requires ctrl+C to close the connection.
 1. Search GitHub for if __name__ == "__main__":
 1. How many hits did you get? 
+    I got 4.3 million hits when I searched for this. 
 1. Learn and understand this common Python idiom.
+    After a brief google search, I see that this python idioma is best used to control which code is being executed when there are difference scenarios.
+
+![Two Terminals Sending and Receiving Message Simultaneously](./version_2_screenshot.jpg)
 
 ## Reference
 
